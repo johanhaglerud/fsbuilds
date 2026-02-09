@@ -1,18 +1,7 @@
 <html>
 <body>
 Det här är en textsida
-
-  <script>
-fetch('https://api.github.com/repos/USER/REPO/contents/')
-  .then(r => r.json())
-  .then(files => {
-    document.body.innerHTML += files
-      .filter(f => f.name.endsWith('.html') && f.name !== 'index.html')
-      .map(f => `<a href="${f.name}">${f.name}</a><br>`)
-      .join('');
-  });
-</script>
-
+  
 </body>
   
 </html>
