@@ -27,12 +27,12 @@ jobs:
             echo '<!doctype html>'
             echo '<html><head><meta charset="utf-8"><title>Pages</title></head><body>'
             echo '<h1>Freedom Scientific Build Notifications</h1>'
-            echo '<ul>'
+            echo '<p>'
             for f in *.html; do
               [ "$f" = "index.html" ] && continue
-              echo "  <li><a href=\"$f\">$f</a></li>"
+              echo "  <a href=\"$f\">$f</a><br>"
             done
-            echo '</ul>'
+            echo '</p>'
             echo '</body></html>'
           } > "$OUT"
 
