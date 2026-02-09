@@ -28,10 +28,12 @@ jobs:
             echo '<html><head><meta charset="utf-8"><title>Pages</title></head><body>'
             echo '<h1>Freedom Scientific Build Notifications</h1>'
             echo '<p>'
-            for f in *.html; do
+
+            for f in $(ls *.html | sort -r); do
               [ "$f" = "index.html" ] && continue
               echo "  <a href=\"$f\">$f</a><br>"
             done
+
             echo '</p>'
             echo '</body></html>'
           } > "$OUT"
