@@ -1,0 +1,49 @@
+name: Build HTML index
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate index.html
+        shell: bash
+        run: |
+          set -e
+          shopt -s nullglob
+
+          OUT="index.html"
+
+          {
+            echo '<!doctype html>'
+            echo '<html><head><meta charset="utf-8"><title>Pages</title></head><body>'
+            echo '<h1>Pages</h1>'
+            echo '<ul>'
+            for f in *.html; do
+              [ "$f" = "index.html" ] && continue
+              echo "  <li><a href=\"$f\">$f</a></li>"
+            done
+            echo '</ul>'
+            echo '</body></html>'
+          } > "$OUT"
+
+      - name: Commit & push if changed
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Auto-update index.html"
+          git push
